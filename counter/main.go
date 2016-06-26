@@ -9,16 +9,19 @@ import (
 
 func main() {
 	counts := make(map[string]int)
-	f, err := os.Open("/home/tatyana/gocode/src/tanya/hello/main.go")
-	if err != nil {
-		log.Fatal(err)
-	}
-	countLines(f, counts)
-	f.Close()
+	files := os.Args[1:]
+	for _, arg := range files {
+		f, err := os.Open(arg)
+		if err != nil {
+			log.Fatal(err)
+		}
+		countLines(f, counts)
+		f.Close()
 
-	for line, n := range counts {
-		if n > 1 {
-			fmt.Printf("%d\t%#v\n", n, line)
+		for line, n := range counts {
+			if n > 1 {
+				fmt.Printf("%d\t%#v\t%s\n", n, line, arg)
+			}
 		}
 	}
 }
