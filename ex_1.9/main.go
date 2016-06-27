@@ -14,11 +14,11 @@ func main() {
 			fmt.Fprintf(os.Stderr, "fetch %v\n", err)
 			os.Exit(1)
 		}
+		fmt.Println("HTTP Status:", resp.Status)
 		io.Copy(os.Stdout, resp.Body)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "fetch: чтение: %s %v\n", url, err)
 			os.Exit(1)
 		}
-		fmt.Println("\nHTTP Status:", resp.Status)
 	}
 }
