@@ -13,9 +13,8 @@ import (
 func main() {
 	start := time.Now()
 	ch := make(chan string)
-	for i, url := range os.Args[1:] {
-		filename := strconv.Itoa(i)
-		go fetch(filename, url, ch)
+	for filename, url := range os.Args[1:] {
+		go fetch(strconv.Itoa(filename), url, ch)
 	}
 	for range os.Args[1:] {
 		fmt.Println(<-ch)
