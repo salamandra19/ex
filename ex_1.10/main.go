@@ -13,7 +13,8 @@ import (
 func main() {
 	start := time.Now()
 	ch := make(chan string)
-	for n, url := range os.Args[1:] {
+	for i, url := range os.Args[1:] {
+		n := strconv.Itoa(i)
 		go fetch(n, url, ch)
 	}
 	for range os.Args[1:] {
@@ -21,14 +22,14 @@ func main() {
 	}
 	fmt.Printf("%.2fs elapsed\n", time.Since(start).Seconds())
 }
-func fetch(n int, url string, ch chan<- string) {
+func fetch(n string, url string, ch chan<- string) {
 	start := time.Now()
 	resp, err := http.Get(url)
 	if err != nil {
 		ch <- fmt.Sprint(err)
 		return
 	}
-	file, err := os.Create(strconv.Itoa(n) + ".txt")
+	file, err := os.Create(n)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,5 +41,5 @@ func fetch(n int, url string, ch chan<- string) {
 		return
 	}
 	secs := time.Since(start).Seconds()
-	ch <- fmt.Sprintf("%.2fs %7d %s filename: %d.txt", secs, nbytes, url, n)
+	ch <- fmt.Sprintf("%.2fs %7d %s filename:%s", secs, nbytes, url, n)
 }
