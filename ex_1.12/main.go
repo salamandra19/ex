@@ -9,11 +9,20 @@ import (
 	"math"
 	"math/rand"
 	"net/http"
+	"strconv"
 )
 
 func main() {
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		lissajous(w)
+		err := r.ParseForm()
+		if err != nil {
+			log.Fatal(err)
+		}
+		cycles, err := strconv.Atoi(r.Form.Get("cycles"))
+		if err != nil {
+			log.Fatal(err)
+		}
+		lissajous(w, float64(cycles))
 	}
 	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
@@ -26,9 +35,9 @@ const (
 	blackIndex = 1 // next color in palette
 )
 
-func lissajous(out io.Writer) {
+func lissajous(out io.Writer, cycles float64) {
 	const (
-		cycles  = 5     // number of complete x oscillator revolutions
+		//		cycles  = 5     // number of complete x oscillator revolutions
 		res     = 0.001 // angular resolution
 		size    = 100   // image canvas covers [-size..+size]
 		nframes = 64    // number of animation frames
