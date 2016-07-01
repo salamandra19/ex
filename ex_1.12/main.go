@@ -22,7 +22,11 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		lissajous(w, float64(cycles), 0.001, 100, 64, 8)
+		res, err := strconv.ParseFloat(r.Form.Get("res"), 64)
+		if err != nil {
+			log.Fatal(err)
+		}
+		lissajous(w, float64(cycles), res, 100, 64, 8)
 	}
 	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
