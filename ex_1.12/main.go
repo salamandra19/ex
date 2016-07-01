@@ -16,15 +16,18 @@ func main() {
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		err := r.ParseForm()
 		if err != nil {
-			log.Fatal(err)
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 		cycles, err := strconv.Atoi(r.Form.Get("cycles"))
 		if err != nil {
-			log.Fatal(err)
+			http.Error(w, "invalid param 'cycles': "+err.Error(), http.StatusBadRequest)
+			return
 		}
 		res, err := strconv.ParseFloat(r.Form.Get("res"), 64)
 		if err != nil {
-			log.Fatal(err)
+			http.Error(w, "invalid param 'res': "+err.Error(), http.StatusBadRequest)
+			return
 		}
 		lissajous(w, float64(cycles), res, 100, 64, 8)
 	}
