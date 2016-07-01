@@ -22,7 +22,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		lissajous(w, float64(cycles))
+		lissajous(w, float64(cycles), 0.001, 100, 64, 8)
 	}
 	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
@@ -35,14 +35,14 @@ const (
 	blackIndex = 1 // next color in palette
 )
 
-func lissajous(out io.Writer, cycles float64) {
-	const (
-		//		cycles  = 5     // number of complete x oscillator revolutions
-		res     = 0.001 // angular resolution
-		size    = 100   // image canvas covers [-size..+size]
-		nframes = 64    // number of animation frames
-		delay   = 8     // delay between frames in 10ms units
-	)
+func lissajous(
+	out io.Writer,
+	cycles float64, // 20  // number of complete x oscillator revolutions
+	res float64, // 0.001 // angular resolution
+	size int, // 100   // image canvas covers [-size..+size]
+	nframes int, // 64    // number of animation frames
+	delay int, // 8     // delay between frames in 10ms units
+) {
 	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
 	anim := gif.GIF{LoopCount: nframes}
 	phase := 0.0 // phase difference
@@ -52,7 +52,7 @@ func lissajous(out io.Writer, cycles float64) {
 		for t := 0.0; t < cycles*2*math.Pi; t += res {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
-			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
+			img.SetColorIndex(size+int(x*float64(size)+0.5), size+int(y*float64(size)+0.5),
 				blackIndex)
 		}
 		phase += 0.1
