@@ -35,3 +35,12 @@ func PopCountEach(x uint64) int {
 	}
 	return sum
 }
+
+func PopCountShort(x uint64) int {
+	sum := 0
+	for x != 0 {
+		x = x & (x - 1)
+		sum++
+	}
+	return sum
+}
