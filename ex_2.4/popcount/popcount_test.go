@@ -23,6 +23,11 @@ func TestPopCount(t *testing.T) {
 		if got != v.want {
 			t.Errorf("PopCountLoop(%d) = %d, want %d", v.x, got, v.want)
 		}
+
+		got = PopCountEach(v.x)
+		if got != v.want {
+			t.Errorf("PopCountEach(%d) = %d, want %d", v.x, got, v.want)
+		}
 	}
 }
 
@@ -35,5 +40,11 @@ func BenchmarkPopCount(b *testing.B) {
 func BenchmarkPopCountLoop(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		PopCountLoop(0x1122334455667788)
+	}
+}
+
+func BenchmarkPopCountEach(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		PopCountEach(0x1122334455667788)
 	}
 }
