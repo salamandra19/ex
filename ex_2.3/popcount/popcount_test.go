@@ -25,3 +25,15 @@ func TestPopCount(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkPopCount(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		PopCount(0x1122334455667788)
+	}
+}
+
+func BenchmarkPopCountLoop(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		PopCountLoop(0x1122334455667788)
+	}
+}
