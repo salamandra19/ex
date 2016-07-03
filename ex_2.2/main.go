@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
@@ -10,13 +11,30 @@ import (
 )
 
 func main() {
-	for _, arg := range os.Args[1:] {
-		t, err := strconv.ParseFloat(arg, 64)
-		if err != nil {
-			log.Fatalf("cf: %v", err)
+	if len(os.Args) > 1 {
+		for _, arg := range os.Args[1:] {
+			convert(arg)
 		}
-		f := tempconv.Fahrenheit(t)
-		c := tempconv.Celsius(t)
-		fmt.Printf("%s = %s, %s = %s\n", f, tempconv.FToC(f), c, tempconv.CToF(c))
+	} else {
+		input := bufio.NewScanner(os.Stdin)
+		for input.Scan() {
+			convert(input.Text())
+		}
+		err := input.Err()
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
+}
+
+func convert(s string) {
+	t, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		log.Printf("cf: %v", err)
+		return
+	}
+
+	f := tempconv.Fahrenheit(t)
+	c := tempconv.Celsius(t)
+	fmt.Printf("%s = %s, %s = %s\n", f, tempconv.FToC(f), c, tempconv.CToF(c))
 }
