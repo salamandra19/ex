@@ -18,5 +18,10 @@ func TestPopCount(t *testing.T) {
 		if got != v.want {
 			t.Errorf("PopCount(%d) = %d, want %d", v.x, got, v.want)
 		}
+
+		got = PopCountLoop(v.x)
+		if got != v.want {
+			t.Errorf("PopCountLoop(%d) = %d, want %d", v.x, got, v.want)
+		}
 	}
 }
