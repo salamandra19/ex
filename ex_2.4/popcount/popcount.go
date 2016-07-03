@@ -25,5 +25,13 @@ func PopCountLoop(x uint64) int {
 		sum += int(pc[byte(x>>(uint(i)*8))])
 	}
 	return sum
+}
 
+func PopCountEach(x uint64) int {
+	sum := 0
+	for i := 0; i < 64; i++ {
+		sum += int(x & 1)
+		x >>= 1
+	}
+	return sum
 }
