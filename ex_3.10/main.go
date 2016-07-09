@@ -15,16 +15,19 @@ func main() {
 func comma(s string) string {
 	var b bytes.Buffer
 	x := len(s) % 3
-	if x != 0 {
-		fmt.Fprintf(&b, "%s", s[:x])
+	if x == 0 {
+		x = 3
 	}
-	s = s[x:]
-	for len(s) > 0 {
-		if b.Len() > 0 {
+	for i := x; len(s) > 0; {
+		if len(s) > 3 {
+			fmt.Fprintf(&b, "%s", s[:i])
 			b.WriteString(",")
+			s = s[i:]
+			i = 3
+		} else {
+			b.WriteString((s[:i]))
+			break
 		}
-		fmt.Fprintf(&b, "%s", s[:3])
-		s = s[3:]
 	}
 	return b.String()
 }
