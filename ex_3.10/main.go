@@ -31,14 +31,12 @@ func comma(s string) string {
 
 func comma1(s string) string {
 	var b bytes.Buffer
-	for i := len(s) % 3; len(s) > 3; i = 3 {
-		if i == 0 {
-			i = 3
+	for i := len(s) % 3; len(s) > 0; i = 3 {
+		if b.Len() > 0 {
+			b.WriteString(",")
 		}
 		b.WriteString(s[:i])
-		b.WriteString(",")
 		s = s[i:]
 	}
-	b.WriteString(s)
 	return b.String()
 }
