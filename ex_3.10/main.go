@@ -8,7 +8,7 @@ import (
 
 func main() {
 	for _, s := range os.Args[1:] {
-		fmt.Println(comma1(s))
+		fmt.Println(comma2(s))
 	}
 }
 
@@ -37,6 +37,22 @@ func comma1(s string) string {
 		}
 		b.WriteString(s[:i])
 		s = s[i:]
+	}
+	return b.String()
+}
+
+func comma2(s string) string {
+	var b bytes.Buffer
+	for i := len(s) % 3; len(s) >= i; i += 3 {
+		if b.Len() == 0 {
+			b.WriteString(s[:i])
+		}
+		if i <= (len(s) - 3) {
+			if b.Len() > 0 {
+				b.WriteString(",")
+			}
+			b.WriteString(s[i : i+3])
+		}
 	}
 	return b.String()
 }
