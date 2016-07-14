@@ -43,13 +43,12 @@ func comma1(s string) string {
 
 func comma2(s string) string {
 	var b bytes.Buffer
-	var n = 0
-	for i := len(s) % 3; len(s) >= i; i += 3 {
+	for end, start := len(s)%3, 0; len(s) >= end; end += 3 {
 		if b.Len() > 0 {
 			b.WriteString(",")
 		}
-		b.WriteString(s[n:i])
-		n = i
+		b.WriteString(s[start:end])
+		start = end
 	}
 	return b.String()
 }
