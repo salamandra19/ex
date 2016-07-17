@@ -7,21 +7,26 @@ import (
 )
 
 func main() {
-	var rest, sign string
 	for _, s := range os.Args[1:] {
-		rest, sign = "", ""
-		for i := len(s) - 1; i >= 0; i-- {
-			if s[i] == '.' {
-				rest = s[i:]
-				s = s[:i]
-			}
-			if s[0] == '-' {
-				sign = "-"
-				s = s[1:]
-			}
-		}
-		fmt.Println(sign + comma(s) + rest)
+		fmt.Println(detail(s))
 	}
+}
+func detail(s string) string {
+	var rest, sign string
+	if len(s) > 0 && (s[0] == '-' || s[0] == '+') {
+		sign = (string(s[0]))
+		s = s[1:]
+	}
+	for i := len(s) - 1; i >= 0; i-- {
+		if s[i] == '.' {
+			rest = s[i:]
+			s = s[:i]
+			break
+		}
+	}
+	s = sign + comma(s) + rest
+
+	return s
 }
 func comma(s string) string {
 	var b bytes.Buffer
@@ -33,31 +38,3 @@ func comma(s string) string {
 	}
 	return b.String()
 }
-
-/*
-func comma(s string) string {
-	var b bytes.Buffer
-	for i := len(s) % 3; len(s) > 3; i = 3 {
-		if i == 0 {
-			i = 3
-		}
-		ss, _ := strconv.ParseFloat(s[:i], 64)
-		fmt.Fprintf(&b, "%v", ss)
-		b.WriteString(",")
-		s = s[i:]
-	}
-	b.WriteString(s)
-	return b.String()
-}
-
-	ss, err := strconv.ParseFloat(s, 64)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	n := len(ss)
-	if n <= 3 {
-		return ss
-	}
-	return comma(ss[:n-3]) + "," + ss[n-3:]
-*/
