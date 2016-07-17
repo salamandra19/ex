@@ -19,7 +19,7 @@ func detail(s string) string {
 	}
 	for i := len(s) - 1; i >= 0; i-- {
 		if s[i] == '.' {
-			rest, s = s[i:], s[:i]
+			s, rest = s[:i], s[i:]
 			break
 		}
 	}
