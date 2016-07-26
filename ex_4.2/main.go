@@ -7,20 +7,20 @@ import (
 	"fmt"
 )
 
-var f384 = flag.Bool("384", false, "преобразование SHA384")
-var f512 = flag.Bool("512", false, "преобразование SHA512")
+var f = flag.Int("algo", 256, "SHA алгоритм, допустимые значения 256, 384, 512")
 
 func main() {
 	flag.Parse()
 	for _, data := range flag.Args() {
-		fmt.Println(data)
-		if !*f384 && !*f512 {
+		switch *f {
+		case 256:
 			fmt.Printf("%x\n", sha256.Sum256([]byte(data)))
-		} else if *f384 {
+		case 384:
 			fmt.Printf("%x\n", sha512.Sum384([]byte(data)))
-		} else {
+		case 512:
 			fmt.Printf("%x\n", sha512.Sum512([]byte(data)))
+		default:
+			fmt.Println("incorrect algo, expect 256/384/512")
 		}
 	}
-
 }
