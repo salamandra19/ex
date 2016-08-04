@@ -12,7 +12,7 @@ func init() {
 	}
 }
 
-func Sha(x, y [32]byte) int {
+func CountDifferentBits(x, y [32]byte) int {
 	sum := 0
 	for i := 0; i < len(x); i++ {
 		sum += int(pc[x[i]^y[i]])
