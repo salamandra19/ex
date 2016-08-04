@@ -5,11 +5,11 @@ import (
 	"testing"
 )
 
-func TestSha(t *testing.T) {
+func TestCountDifferentBits(t *testing.T) {
 	tests := []struct {
-		a   string
-		b   string
-		sum int
+		a    string
+		b    string
+		want int
 	}{
 		{"x", "X", 125},
 		{"a", "A", 136},
@@ -17,9 +17,9 @@ func TestSha(t *testing.T) {
 	for _, v := range tests {
 		c1 := sha256.Sum256([]byte(v.a))
 		c2 := sha256.Sum256([]byte(v.b))
-		got := Sha(c1, c2)
-		if got != v.sum {
-			t.Errorf("Sha (%v, %v) = %v, sum = %v", v.a, v.b, got, v.sum)
+		got := CountDifferentBits(c1, c2)
+		if got != v.want {
+			t.Errorf("Sha(%v, %v) = %v, want = %v", v.a, v.b, got, v.want)
 		}
 	}
 }
