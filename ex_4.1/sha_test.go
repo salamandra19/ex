@@ -19,7 +19,7 @@ func TestCountDifferentBits(t *testing.T) {
 		c2 := sha256.Sum256([]byte(v.b))
 		got := CountDifferentBits(c1, c2)
 		if got != v.want {
-			t.Errorf("Sha(%v, %v) = %v, want = %v", v.a, v.b, got, v.want)
+			t.Errorf("CountDifferentBits(%v, %v) = %v, want = %v", v.a, v.b, got, v.want)
 		}
 	}
 }
