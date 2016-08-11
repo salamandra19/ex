@@ -21,7 +21,7 @@ func TestRemoveSame(t *testing.T) {
 	for _, v := range tests {
 		got := RemoveSame(v.a)
 		if !reflect.DeepEqual(got, v.want) {
-			t.Errorf("RemoveSame %v = %v want %v", v.a, got, v.want)
+			t.Errorf("RemoveSame(%v) = %v, want %v", v.a, got, v.want)
 		}
 	}
 }
