@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	counts := make(map[string]int)
 	files := os.Args[1:]
 	for _, arg := range files {
 		f, err := os.Open(arg)
 		if err != nil {
 			log.Fatal(err)
 		}
+		counts := make(map[string]int)
 		countLines(f, counts)
 		f.Close()
 
