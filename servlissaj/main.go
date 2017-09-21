@@ -27,11 +27,11 @@ const (
 )
 
 func main() {
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		lissajous(w)
 	}
 	http.HandleFunc("/", handler)
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
 
 func lissajous(out io.Writer) {
