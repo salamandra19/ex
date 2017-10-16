@@ -30,11 +30,9 @@ func main() {
 		}
 		if unicode.IsLetter(r) {
 			letter++
-			continue
 		}
 		if unicode.IsNumber(r) {
 			number++
-			continue
 		}
 
 		counts[r]++
